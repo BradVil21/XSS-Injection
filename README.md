@@ -62,10 +62,11 @@ After identifying the attack type, it is also important to check if this is a pl
   <li>Check if the device generating malicious traffic belongs to attack simulation products. If the Hostname contains the name of Attack Simulation products (such as Verodin, AttackIQ, Picus…), these devices belong to Attack Simulation products within the framework of LetsDefend simulation and it is a planned work.</li>
 </ul>
 <br>
-After checking the SIEM, this was not a planned test. With further investigation, I was able to find an HTTP Response status of 200 indicating that there was a success on the attacker's end. The direction of traffic was <b>Internet > Company Network</b>
+After checking the SIEM, this was not a planned test. With further investigation, I was able to find an HTTP Response status of 302 indicating that their attempt was unsuccessful. The direction of traffic was <b>Internet > Company Network</b>
 <br>
 
 <b>STEP 4</b><br>
 Since it is now detected that the device is compromised, it is important to contain this internal device to avoid any future attacks. By heading to <b>Endpoint Security</b> and requesting to contain the device.<br>
 <br>
 <b>Summary:</b><br>
+When analyzing the q parameter, it was confirmed that an XSS payload was present. Since the payload is embedded in the URL and directly reflected in the response, this has been identified as a Reflected XSS attack. By filtering logs on the Log Management page based on the source IP address, it was observed that the attacker attempted multiple variations of XSS payloads, indicating persistence in exploiting the vulnerability. Further investigation revealed that all requests associated with the attack were redirected with a 302 status code, effectively preventing the malicious payloads from being executed. Consequently, the attack was deemed unsuccessful. As the attack posed no immediate threat due to its failure to execute, escalation to the next level of incident response is unnecessary at this time. However, continuous monitoring is recommended to ensure no further attempts to exploit this or other vulnerabilities.
